@@ -75,17 +75,21 @@
         <section>
           <img {{bind-attr src=imgURL}} />
           <p>{{description}}</p>
-          <h4>Ingredients</h4>
+          <h4 {{action 'toggleItems' on 'click'}}>{{itemCount}} Ingredients</h4>
           <ul>
-            {{#each item in splitItems}}
-            <li>{{item}}</li>
-            {{/each}}
+            {{#if showItems}}
+              {{#each item in splitItems}}
+              <li>{{item}}</li>
+              {{/each}}
+            {{/if}}
           </ul>
-          <h4>Steps</h4>
+        <h4 {{action 'toggleSteps' on 'click'}}>{{stepCount}} Steps</h4>
           <ul>
-            {{#each step in splitSteps}}
-              <li>{{step}}</li>
-            {{/each}}
+            {{#if showSteps}}
+              {{#each step in splitSteps}}
+                <li>{{step}}</li>
+              {{/each}}
+            {{/if}}
           </ul>
         </section>
         <button {{action 'destroy'}} class='btn btn-danger'>Destroy Recipe</button>

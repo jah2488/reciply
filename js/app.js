@@ -28,7 +28,6 @@ App.NewRecipeController = Ember.Controller.extend({
     }
 });
 
-
 App.EditRecipeRoute = Ember.Route.extend({
     model: function (params) {
         return this.store.find('recipe', params.id);
@@ -51,6 +50,12 @@ App.RecipeRoute = Ember.Route.extend({
 });
 
 App.RecipeController = Ember.ObjectController.extend({
+    itemCount: Ember.computed.alias('splitItems.length'),
+    stepCount: Ember.computed.alias('splitSteps.length'),
+
+    showSteps: true,
+    showItems: true,
+
     splitSteps: function () {
         return this.get('steps').split(',');
     }.property('steps'),
@@ -60,6 +65,12 @@ App.RecipeController = Ember.ObjectController.extend({
     }.property('items'),
 
     actions: {
+        toggleSteps: function () {
+            this.set('showSteps', !this.get('showSteps'));
+        },
+        toggleItems: function () {
+            this.set('showItems', !this.get('showItems'));
+        },
         destroy: function () {
             this.get('model').deleteRecord();
             this.get('model').save();
