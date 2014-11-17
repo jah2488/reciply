@@ -2,9 +2,12 @@ App = Ember.Application.create({
     LOG_TRANSITIONS: true
 });
 
-App.ApplicationAdapter = DS.LSAdapter.extend({
-    namespace: 'reciply'
-});//THIS IS THE LOCAL STORAGE ADAPTER SETUP
+//App.ApplicationAdapter = DS.LSAdapter.extend({
+//    namespace: 'reciply'
+//});//THIS IS THE LOCAL STORAGE ADAPTER SETUP
+App.ApplicationAdapter = DS.FirebaseAdapter.extend({
+    firebase: new Firebase('https://vivid-torch-2498.firebaseio.com/')
+});
 
 App.Router.map(function() {
     this.route('recipe',      { path: '/recipes/:id'     });
@@ -66,10 +69,10 @@ App.RecipeController = Ember.ObjectController.extend({
 
     actions: {
         toggleSteps: function () {
-            this.set('showSteps', !this.get('showSteps'));
+            this.toggleProperty('showSteps');
         },
         toggleItems: function () {
-            this.set('showItems', !this.get('showItems'));
+            this.toggleProperty('showItems');
         },
         destroy: function () {
             this.get('model').deleteRecord();
