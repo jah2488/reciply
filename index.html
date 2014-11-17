@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Ember Starter Kit</title>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <script type="text/x-handlebars">
+    <h1>Reciply</h1>
+    {{link-to "Home"       "index"}}
+    {{link-to "New Recipe" "new_recipe"}}
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" id="new_recipe">
+     <form role="form">
+      <div class="form-group">
+        <label for='title'>Title</label>
+        {{input type='text' value=title id='title' class='form-control'}}
+      </div>
+      <div class="form-group">
+        <label for='description'>Description</label>
+        {{input type='text' value=description id='description' class='form-control'}}
+      </div>
+      <div class="form-group">
+        <label for='image'>image (url)</label>
+        {{input type='text' value=imgURL id='image' class='form-control'}}
+      </div>
+      <div class="form-group">
+        <label for='items'>Items</label>
+        {{input type='text' value=items id='items' class='form-control'}}
+      </div>
+      <div class="form-group">
+        <label for='steps'>Steps</label>
+        {{input type='text' value=steps id='steps' class='form-control'}}
+      </div>
+      <button {{action 'save'}}>Create New Recipe</button>
+    </form>
+  </script>
+
+  <script type="text/x-handlebars" id="edit_recipe">
+     <form role="form">
+      <div class="form-group">
+        <label for='title'>Title</label>
+        {{input type='text' value=title id='title' class='form-control'}}
+      </div>
+      <div class="form-group">
+        <label for='description'>Description</label>
+        {{input type='text' value=description id='description' class='form-control'}}
+      </div>
+      <div class="form-group">
+        <label for='image'>image (url)</label>
+        {{input type='text' value=imgURL id='image' class='form-control'}}
+      </div>
+      <div class="form-group">
+        <label for='items'>Items</label>
+        {{input type='text' value=items id='items' class='form-control'}}
+      </div>
+      <div class="form-group">
+        <label for='steps'>Steps</label>
+        {{input type='text' value=steps id='steps' class='form-control'}}
+      </div>
+      <button {{action 'update'}} class='btn btn-primary'>Update Recipe</button>
+    </form>
+  </script>
+
+  <script type="text/x-handlebars" id="recipe">
+      <article>
+        <header>
+          <h2> {{title}} </h2>
+          {{link-to "Edit" "edit_recipe" this}}
+        </header>
+        <section>
+          <img {{bind-attr src=imgURL}} />
+          <p>{{description}}</p>
+          <h4>Ingredients</h4>
+          <ul>
+            {{#each item in splitItems}}
+            <li>{{item}}</li>
+            {{/each}}
+          </ul>
+          <h4>Steps</h4>
+          <ul>
+            {{#each step in splitSteps}}
+              <li>{{step}}</li>
+            {{/each}}
+          </ul>
+        </section>
+        <button {{action 'destroy'}} class='btn btn-danger'>Destroy Recipe</button>
+      </article>
+  </script>
+
+  <script type="text/x-handlebars" id="index">
+    <ul>
+      {{#each}}
+      <li>
+        <article>
+          <header>
+            {{#link-to 'recipe' this tagName='h2'}} {{title}} {{/link-to}}
+          </header>
+        </article>
+      </li>
+      {{/each}}
+    </ul>
+  </script>
+
+  <script src="js/libs/jquery-1.10.2.js"></script>
+  <script src="js/libs/handlebars-v1.3.0.js"></script>
+  <script src="js/libs/ember-1.8.1.js"></script>
+  <script src="js/libs/ember-data-1.0.0-beta.11.js"></script>
+  <script src="js/libs/ember-localstorage.js"></script>
+  <script src="js/app.js"></script>
+  <!-- to activate the test runner, add the "?test" query string parameter -->
+  <script src="tests/runner.js"></script>
+</body>
+</html>
