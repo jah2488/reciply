@@ -70,6 +70,10 @@
         {{input type='text' value=description id='description' class='form-control'}}
       </div>
       <div class="form-group">
+        <label for='category'>Category</label>
+        {{view "select" value=category content=App.CATEGORIES optionValuePath="content.id" optionLabelPath="content.name" classNames='form-control'}}
+      </div>
+      <div class="form-group">
         <label for='image'>image (url)</label>
         {{input type='text' value=imgURL id='image' class='form-control'}}
       </div>
@@ -96,6 +100,10 @@
         {{input type='text' value=description id='description' class='form-control'}}
       </div>
       <div class="form-group">
+        <label for='category'>Category</label>
+        {{input type='text' value=category id='category' class='form-control'}}
+      </div>
+      <div class="form-group">
         <label for='image'>image (url)</label>
         {{input type='text' value=imgURL id='image' class='form-control'}}
       </div>
@@ -117,6 +125,8 @@
       <article>
         <header>
           <h2> {{title}} </h2>
+          <h4> {{categoryName}}</h4>
+          {{category}}
         </header>
         <section>
           <img {{bind-attr src=imgURL}} style='width:500px'/>
@@ -132,7 +142,7 @@
             </ul>
           {{/if}}
           <h4 {{action 'toggleSteps' on 'click'}}>
-            {{stepCount}} Steps <i {{bind-attr class=':glyphicon showSteps:glyphicon-chevron-down:glyphicon-chevron-up'}}></i>
+        {{stepCount}} Steps <i {{bind-attr class=':glyphicon showSteps:glyphicon-chevron-down:glyphicon-chevron-up'}}></i>
           </h4>
           {{#if showSteps}}
             <ul>
@@ -145,6 +155,29 @@
         {{link-to "Edit" "edit_recipe" this classNames='btn btn-primary'}}
         <button {{action 'destroy'}} class='btn btn-danger'>Destroy Recipe</button>
       </article>
+  </script>
+
+  <script type="text/x-handlebars" id="category">
+    {{link-to 'Clear Filter' 'category' (query-params category='all')}}
+    {{#each App.CATEGORIES}}
+      {{#link-to 'category' (query-params category=id)}} Sort By {{name}} {{/link-to}}
+    {{/each}}
+    {{#if filteredRecipes.length}}
+      <h2>{{filteredRecipes.length}} Recipe{{#if moreThanOneFound}}s{{/if}} Found</h2>
+    {{else}}
+      <h2>Sorry No Recipes Found</h2>
+    {{/if}}
+    <ul>
+      {{#each filteredRecipes}}
+      <li>
+        <article>
+          <header>
+            {{#link-to 'recipe' this tagName='h2'}} {{title}} {{/link-to}}
+          </header>
+        </article>
+      </li>
+      {{/each}}
+    </ul>
   </script>
 
   <script type="text/x-handlebars" id="index">
@@ -177,7 +210,7 @@
   <script src="js/controllers/new_recipe_controller.js"></script>
   <script src="js/controllers/ingredient_controller.js"></script>
   <script src="js/controllers/recipe_controller.js"></script>
-  <script src='js/new_recipe_index_route.js'></script>
+  <script src="js/routes/category_route.js"></script>
   <script src="js/routes/edit_recipe_route.js"></script>
   <script src="js/routes/index_route.js"></script>
   <script src="js/routes/ingredient_route.js"></script>

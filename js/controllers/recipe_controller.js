@@ -17,6 +17,12 @@ App.RecipeController = Ember.ObjectController.extend({
         return marked(this.get('description'));
     }.property('description'),
 
+    categoryName: function () {
+        var category = App.CATEGORIES.findBy('id', this.get('category'));
+        if(category)
+            return category.name;
+    }.property('category'),
+
     actions: {
         toggleSteps: function () {
             this.toggleProperty('showSteps');
