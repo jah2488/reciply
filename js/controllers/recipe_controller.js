@@ -13,6 +13,10 @@ App.RecipeController = Ember.ObjectController.extend({
         return this.get('items').split(',');
     }.property('items'),
 
+    markedDescription: function () {
+        return marked(this.get('description'));
+    }.property('description'),
+
     actions: {
         toggleSteps: function () {
             this.toggleProperty('showSteps');
