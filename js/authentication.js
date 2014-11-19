@@ -19,7 +19,7 @@ App.ApplicationRoute = Ember.Route.extend({
 App.AuthenticatedRoute = Ember.Route.extend({
   beforeModel: function(transition) {
     var applicationController = this.controllerFor('application');
-    if (!localStorage.authToken) {
+    if (localStorage.authToken !== App.Firebase.getAuth().token) {//Yay! actual verification
       applicationController.set('savedTransition', transition);
       this.transitionTo('login');
     } else {

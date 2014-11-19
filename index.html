@@ -16,7 +16,9 @@
     {{else}}
       {{link-to 'Login' 'login' classNames='btn btn-primary'}}
     {{/if}}
-    {{outlet}}
+    <section>
+      {{outlet}}
+    </section>
   </script>
 
   <script type='text/x-handlebars' id='ingredient'>
@@ -134,7 +136,6 @@
         <header>
           <h2> {{title}} </h2>
           <h4> {{categoryName}}</h4>
-          {{category}}
         </header>
         <section>
           <img {{bind-attr src=imgURL}} style='width:500px'/>
@@ -176,10 +177,13 @@
     </section>
   </script>
   <script type="text/x-handlebars" id="category">
-    {{link-to 'Clear Filter' 'category' (query-params category='all')}}
-    {{#each App.CATEGORIES}}
-      {{#link-to 'category' (query-params category=id)}} Sort By {{name}} {{/link-to}}
-    {{/each}}
+    <nav>
+    <ul>
+      <li>{{link-to 'Show All' 'category' (query-params category='all')}}</li>
+      {{#each App.CATEGORIES}}
+        <li>{{#link-to 'category' (query-params category=id)}} Show Only {{name}} {{/link-to}}</li>
+      {{/each}}
+    </ul>
     {{#if filteredRecipes.length}}
       <h2>{{filteredRecipes.length}} Recipe{{#if moreThanOneFound}}s{{/if}} Found</h2>
     {{else}}
@@ -199,6 +203,7 @@
   </script>
 
   <script type="text/x-handlebars" id="index">
+    <a {{action "sortToggle"}}>Flip Sort</a>
     <ul>
       {{#each}}
       <li>
