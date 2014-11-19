@@ -9,5 +9,6 @@ App.Recipe = DS.Model.extend({
     category   : DS.attr('string'),
     imgURL     : DS.attr('string'),
     items      : DS.attr('string'),//Make this a hasMany later
-    steps      : DS.attr('string')
+    steps      : DS.attr('string'),
+    rank       : DS.attr('number')
 });

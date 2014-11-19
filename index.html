@@ -203,16 +203,21 @@
   </script>
 
   <script type="text/x-handlebars" id="index">
-    <a {{action "sortToggle"}}>Flip Sort</a>
+    <a {{action "sortToggle" "title"}}>Toggle Alphabetical Sort</a>
+    <a {{action "sortToggle" "rank"}}>Toggle Rank Sort</a>
     <ul>
       {{#each}}
-      <li>
-        <article>
-          <header>
-            {{#link-to 'recipe' this tagName='h2'}} {{title}} {{/link-to}}
-          </header>
-        </article>
-      </li>
+        <li>
+          <article>
+            <header>
+              <h2>
+              <i class='glyphicon glyphicon-chevron-up' {{action "upvote" this }} ></i>
+              {{#link-to 'recipe' }} {{rank}} {{title}} {{/link-to}}
+              <i class='glyphicon glyphicon-chevron-down' {{action "downvote" this }} ></i>
+              </h2>
+            </header>
+          </article>
+        </li>
       {{/each}}
     </ul>
   </script>
