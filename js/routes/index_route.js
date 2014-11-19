@@ -1,4 +1,4 @@
-App.IndexRoute = Ember.Route.extend({
+App.IndexRoute = App.ApplicationRoute.extend({
     model: function () {
         return this.store.find('recipe');
     }

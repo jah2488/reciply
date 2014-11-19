@@ -9,8 +9,13 @@
 <body>
   <script type="text/x-handlebars">
     {{link-to "Reciply" "index" tagName="h1"}}
-    {{link-to "New Recipe" "new_recipe"}}
     {{link-to "Ingredients" "ingredients"}}
+    {{#if isLoggedIn}}
+      {{link-to "New Recipe" "new_recipe"}}
+      <button {{action "logout"}} class='btn btn-primary'>Logout</button>
+    {{else}}
+      {{link-to 'Login' 'login' classNames='btn btn-primary'}}
+    {{/if}}
     {{outlet}}
   </script>
 
@@ -61,6 +66,9 @@
 
   <script type="text/x-handlebars" id="new_recipe">
      <form role="form">
+      <div class='errors'>
+          <li>{{errors}}</li>
+      </div>
       <div class="form-group">
         <label for='title'>Title</label>
         {{input type='text' value=title id='title' class='form-control'}}
@@ -145,6 +153,7 @@
         {{stepCount}} Steps <i {{bind-attr class=':glyphicon showSteps:glyphicon-chevron-down:glyphicon-chevron-up'}}></i>
           </h4>
           {{#if showSteps}}
+{{splitSteps.length}}
             <ul>
               {{#each step in splitSteps}}
                 <li>{{step}}</li>
@@ -157,6 +166,15 @@
       </article>
   </script>
 
+  <script type='text/x-handlebars' id='login'>
+    <h2>Login</h2>
+    <section>
+    <h4>{{error}}</h4>
+    {{input type='email'    value=username placeholder='email'}}
+    {{input type='password' value=password placeholder='password'}}
+    <button {{action 'login'}}>Login</button>
+    </section>
+  </script>
   <script type="text/x-handlebars" id="category">
     {{link-to 'Clear Filter' 'category' (query-params category='all')}}
     {{#each App.CATEGORIES}}
@@ -210,13 +228,13 @@
   <script src="js/controllers/new_recipe_controller.js"></script>
   <script src="js/controllers/ingredient_controller.js"></script>
   <script src="js/controllers/recipe_controller.js"></script>
+  <script src="js/router.js"></script>
   <script src="js/routes/category_route.js"></script>
   <script src="js/routes/edit_recipe_route.js"></script>
   <script src="js/routes/index_route.js"></script>
   <script src="js/routes/ingredient_route.js"></script>
   <script src="js/routes/ingredients_route.js"></script>
   <script src="js/routes/recipe_route.js"></script>
-  <script src="js/router.js"></script>
   <!-- to activate the test runner, add the "?test" query string parameter -->
   <script src="tests/runner.js"></script>
 </body>

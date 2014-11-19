@@ -6,16 +6,16 @@ App.RecipeController = Ember.ObjectController.extend({
     showItems: true,
 
     splitSteps: function () {
-        return this.get('steps').split(',');
+        if(this.get('steps')) {
+            return (this.get('steps') || '').split(',');
+        }
     }.property('steps'),
 
     splitItems: function () {
-        return this.get('items').split(',');
+        if(this.get('items')) {
+            return this.get('items').split(',');
+        }
     }.property('items'),
-
-    markedDescription: function () {
-        return marked(this.get('description'));
-    }.property('description'),
 
     categoryName: function () {
         var category = App.CATEGORIES.findBy('id', this.get('category'));

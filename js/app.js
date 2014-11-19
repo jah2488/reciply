@@ -3,8 +3,10 @@ App = Ember.Application.create({
 });
 
 //App.ApplicationAdapter = DS.LSAdapter.extend({ namespace: 'reciply' // });//THIS IS THE LOCAL STORAGE ADAPTER SETUP
+App.Firebase = new Firebase('https://vivid-torch-2498.firebaseio.com');
+
 App.ApplicationAdapter = DS.FirebaseAdapter.extend({
-    firebase: new Firebase('https://vivid-torch-2498.firebaseio.com')
+    firebase: App.Firebase
 });
 
 App.CATEGORIES = [
