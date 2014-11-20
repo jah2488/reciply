@@ -1,5 +1,7 @@
 App.Router.map(function() {
-    this.route('recipe',         { path: '/recipes/:id'      });
+    this.route('recipe',         { path: '/recipes/:id'      }, function () {
+        this.route('new_comment');
+    });
     this.route('edit_recipe',    { path: '/recipes/:id/edit' });
     this.route('new_recipe',     { path: '/recipes/new'      });
 

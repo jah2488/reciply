@@ -154,7 +154,6 @@
         {{stepCount}} Steps <i {{bind-attr class=':glyphicon showSteps:glyphicon-chevron-down:glyphicon-chevron-up'}}></i>
           </h4>
           {{#if showSteps}}
-{{splitSteps.length}}
             <ul>
               {{#each step in splitSteps}}
                 <li>{{step}}</li>
@@ -164,7 +163,36 @@
         </section>
         {{link-to "Edit" "edit_recipe" this classNames='btn btn-primary'}}
         <button {{action 'destroy'}} class='btn btn-danger'>Destroy Recipe</button>
+        <section>
+          <h2>Comments</h2>
+          {{#each comments}}
+            <article>
+              <p>{{date}}</p>
+              {{{markedText}}} - {{name}}
+            </article>
+          {{/each}}
+          {{outlet}}
+          <hr>
+          {{link-to "New Comment" "recipe.new_comment" this.id class='btn btn-primary'}}
+        </section>
       </article>
+  </script>
+  <script type='text/x-handlebars' id='recipe/new_comment'>
+    <h4>New Comment</h4>
+    <div class='preview'>
+      {{{markedText}}} - {{name}}
+    </div>
+    <form>
+      <div class='form-group'>
+        <label for='name'>Name:</label>
+        {{input value=name id='name' class='form-control'}}
+      </div>
+      <div class='form-group'>
+        <label for='text'>Feedback:</label>
+        {{textarea value=text id='text' class='form-control' rows='5'}}
+      </div>
+      <button class='btn btn-primary' {{action 'save'}}>Add Comment</button>
+    </form>
   </script>
 
   <script type='text/x-handlebars' id='login'>
@@ -212,7 +240,7 @@
             <header>
               <h2>
               <i class='glyphicon glyphicon-chevron-up' {{action "upvote" this }} ></i>
-              {{#link-to 'recipe' }} {{rank}} {{title}} {{/link-to}}
+              {{#link-to 'recipe' this}} {{rank}} {{title}} {{/link-to}}
               <i class='glyphicon glyphicon-chevron-down' {{action "downvote" this }} ></i>
               </h2>
             </header>
@@ -233,6 +261,8 @@
   <script src="js/app.js"></script>
   <script src="js/models/ingredient.js"></script>
   <script src="js/models/recipe.js"></script>
+  <script src="js/models/comment.js"></script>
+  <script src="js/controllers/new_comment_controller.js"></script>
   <script src="js/controllers/edit_recipe_controller.js"></script>
   <script src="js/controllers/new_ingredient_controller.js"></script>
   <script src="js/controllers/new_recipe_controller.js"></script>

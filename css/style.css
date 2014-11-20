@@ -10,3 +10,7 @@ body {
 .active {
   color: #3D3D3D;
 }
+.preview {
+  border: 2px dashed white;
+  padding: 10px;
+}

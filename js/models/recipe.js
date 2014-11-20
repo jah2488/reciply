@@ -10,5 +10,6 @@ App.Recipe = DS.Model.extend({
     imgURL     : DS.attr('string'),
     items      : DS.attr('string'),//Make this a hasMany later
     steps      : DS.attr('string'),
-    rank       : DS.attr('number')
+    rank       : DS.attr('number'),
+    comments   : DS.hasMany('comment', { async: true})
 });
