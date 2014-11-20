@@ -66,40 +66,8 @@
      </form>
   </script>
 
-  <script type="text/x-handlebars" id="new_recipe">
-     <form role="form">
-      <div class='errors'>
-          <li>{{errors}}</li>
-      </div>
-      <div class="form-group">
-        <label for='title'>Title</label>
-        {{input type='text' value=title id='title' class='form-control'}}
-      </div>
-      <div class="form-group">
-        <label for='description'>Description</label>
-        {{input type='text' value=description id='description' class='form-control'}}
-      </div>
-      <div class="form-group">
-        <label for='category'>Category</label>
-        {{view "select" value=category content=App.CATEGORIES optionValuePath="content.id" optionLabelPath="content.name" classNames='form-control'}}
-      </div>
-      <div class="form-group">
-        <label for='image'>image (url)</label>
-        {{input type='text' value=imgURL id='image' class='form-control'}}
-      </div>
-      <div class="form-group">
-        <label for='items'>Items</label>
-        {{input type='text' value=items id='items' class='form-control'}}
-      </div>
-      <div class="form-group">
-        <label for='steps'>Steps</label>
-        {{input type='text' value=steps id='steps' class='form-control'}}
-      </div>
-      <button {{action 'save'}} class='btn btn-primary'>Create New Recipe</button>
-    </form>
-  </script>
-
-  <script type="text/x-handlebars" id="edit_recipe">
+  <script type="text/x-handlebars" id="components/recipe-form">
+    {{#with recipe}}
      <form role="form">
       <div class="form-group">
         <label for='title'>Title</label>
@@ -125,13 +93,26 @@
         <label for='steps'>Steps</label>
         {{input type='text' value=steps id='steps' class='form-control'}}
       </div>
-      <button {{action 'update'}} class='btn btn-primary'>Update Recipe</button>
+      {{yield}}
     </form>
     <h2>{{title}}</h2>
+    {{/with}}
     {{{markedDescription}}}
   </script>
 
-  <script type="text/x-handlebars" id="recipe">
+  <script type="text/x-handlebars" id="new_recipe">
+    {{#recipe-form recipe=this}}
+      <button {{action 'save'}} class='btn btn-primary'>Create New Recipe</button>
+    {{/recipe-form}}
+  </script>
+  <script type="text/x-handlebars" id="edit_recipe">
+    {{#recipe-form recipe=this}}
+      <button {{action 'update'}} class='btn btn-primary'>Update Recipe</button>
+    {{/recipe-form}}
+  </script>
+
+  <script type="text/x-handlebars" id="components/recipe-detail">
+    {{#with recipe}}
       <article>
         <header>
           <h2> {{title}} </h2>
@@ -161,8 +142,10 @@
             </ul>
           {{/if}}
         </section>
-        {{link-to "Edit" "edit_recipe" this classNames='btn btn-primary'}}
-        <button {{action 'destroy'}} class='btn btn-danger'>Destroy Recipe</button>
+        {{#if isLoggedIn}}
+          {{link-to "Edit" "edit_recipe" this classNames='btn btn-primary'}}
+          <button {{action 'destroy'}} class='btn btn-danger'>Destroy Recipe</button>
+        {{/if}}
         <section>
         <h2>Comments ({{comments.length}})</h2>
           {{#each comments}}
@@ -176,6 +159,10 @@
           {{link-to "New Comment" "recipe.new_comment" this.id class='btn btn-primary'}}
         </section>
       </article>
+    {{/with}}
+  </script>
+  <script type="text/x-handlebars" id="recipe">
+    {{recipe-detail recipe=this}}
   </script>
   <script type='text/x-handlebars' id='recipe/new_comment'>
     <h4>New Comment</h4>
@@ -204,6 +191,7 @@
     <button {{action 'login'}}>Login</button>
     </section>
   </script>
+
   <script type="text/x-handlebars" id="category">
     <nav>
       <ul>

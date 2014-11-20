@@ -1,4 +1,7 @@
 App.RecipeController = Ember.ObjectController.extend({
+    needs: ['application'],
+    isLoggedIn: Ember.computed.alias('controllers.application.isLoggedIn'),
+
     itemCount: Ember.computed.alias('splitItems.length'),
     stepCount: Ember.computed.alias('splitSteps.length'),
 
