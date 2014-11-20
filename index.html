@@ -111,7 +111,7 @@
       </div>
       <div class="form-group">
         <label for='category'>Category</label>
-        {{input type='text' value=category id='category' class='form-control'}}
+        {{view "select" value=category content=App.CATEGORIES optionValuePath="content.id" optionLabelPath="content.name" classNames='form-control'}}
       </div>
       <div class="form-group">
         <label for='image'>image (url)</label>
@@ -164,11 +164,11 @@
         {{link-to "Edit" "edit_recipe" this classNames='btn btn-primary'}}
         <button {{action 'destroy'}} class='btn btn-danger'>Destroy Recipe</button>
         <section>
-          <h2>Comments</h2>
+        <h2>Comments ({{comments.length}})</h2>
           {{#each comments}}
-            <article>
+            <article style='border-bottom: 1px dashed black'>
               <p>{{date}}</p>
-              {{{markedText}}} - {{name}}
+              {{{markedText}}} -- {{name}}
             </article>
           {{/each}}
           {{outlet}}
@@ -206,12 +206,13 @@
   </script>
   <script type="text/x-handlebars" id="category">
     <nav>
-    <ul>
-      <li>{{link-to 'Show All' 'category' (query-params category='all')}}</li>
-      {{#each App.CATEGORIES}}
-        <li>{{#link-to 'category' (query-params category=id)}} Show Only {{name}} {{/link-to}}</li>
-      {{/each}}
-    </ul>
+      <ul>
+        <li>{{link-to 'Show All' 'category' (query-params category='all')}}</li>
+        {{#each App.CATEGORIES}}
+          <li>{{#link-to 'category' (query-params category=id)}} Show Only {{name}} {{/link-to}}</li>
+        {{/each}}
+      </ul>
+    </nav>
     {{#if filteredRecipes.length}}
       <h2>{{filteredRecipes.length}} Recipe{{#if moreThanOneFound}}s{{/if}} Found</h2>
     {{else}}

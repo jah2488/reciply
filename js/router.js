@@ -9,7 +9,7 @@ App.Router.map(function() {
     this.route('ingredient',     { path: '/ingredients/:id'  });
     this.route('new_ingredient', { path: '/ingredients/new'  });
 
-    this.route('category', { path: '/recipes'});
+    this.route('category', { path: '/categories'});
 
     this.route('login', { path: '/login'});
 });
