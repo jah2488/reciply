@@ -30,6 +30,7 @@ App.ApplicationRoute = Ember.Route.extend({
       this.controllerFor('application').logout();
       delete localStorage.authToken;
       this.transitionTo('login');
+      App.Firebase.unauth();
     }
   }
 });
